@@ -18,8 +18,8 @@ void Board::printboard(Point p)
 	}
 }
 
-void Board::display() {
-
+void Board::display()
+{
 	int y = point.getY();// cahseing
 	int x = point.getX();// cahseing
 	gotoxy(x, y - 1);
@@ -30,11 +30,7 @@ void Board::display() {
 				cout << '#';
 			else
 				cout << boardGame[i][j];
-
-
 		}
-
-
 	}
 }
 

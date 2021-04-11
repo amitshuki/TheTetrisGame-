@@ -1,3 +1,4 @@
+#pragma once
 #include "Player.h"
 #include"Menu.h"
 #include "Board.h"
@@ -7,12 +8,6 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
-
-
-
-
-
-#pragma once
 
 class Game
 {

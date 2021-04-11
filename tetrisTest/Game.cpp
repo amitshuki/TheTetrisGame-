@@ -22,6 +22,7 @@ void Game::run() {
 			key = 8;
 	}
 	while (key == 1) {
+		system("cls");
 		player_1.board.BoardInit(Point(6, 5), P1Keys);
 		player_2.board.BoardInit(Point(48, 5), P2Keys);
 

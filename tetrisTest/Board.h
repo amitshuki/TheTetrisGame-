@@ -11,7 +11,8 @@
 #include <time.h>
 const int ROWS = 18;
 const int COLS = 12;
-enum { MID = 5,UP= 0 };
+
+enum { MID = 5,UP= 0 , BLOCKSIZE=4};
 class Board
 {
 	char boardGame[COLS][ROWS];

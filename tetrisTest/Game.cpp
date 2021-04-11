@@ -47,7 +47,7 @@ void Game::run() {
 						player_1.board.display();
 						player_2.board.printboard(player_2.board.getPoint());
 						player_2.board.display();
-						_flushall;
+						_flushall();
 						c = _getch();
 					}
 					if (c == '9') {
@@ -61,7 +61,7 @@ void Game::run() {
 
 				player_1.board.userInput(c);
 
-				_flushall;
+				_flushall();
 			}
 			player_1.board.userInput(DOWN);
 			player_2.board.userInput(DOWN);
@@ -73,7 +73,7 @@ void Game::run() {
 			menu.printGameOver(isGameOver());
 		player_1.board.setGameOver(false);
 		player_2.board.setGameOver(false);
-		_flushall;
+		_flushall();
 		key = menu.printMenu();
 		Sleep(5000);
 

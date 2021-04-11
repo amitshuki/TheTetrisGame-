@@ -1,8 +1,11 @@
 #pragma once
 class Shape
 {
+    int type;
 public:
-    char Shpes[7][4][4] =
+    enum Shapes { Line, LShape, Zshape, Sshape, plus, cube, Jshape };
+
+    char Shapes[7][4][4] =
     {
 {
     { '&', ' ', ' ', ' ' },
@@ -49,6 +52,7 @@ public:
     { ' ', ' ', ' ', ' ' }
 }
     };
-
+    void setShape(int shape) { type = shape; }
+    int getShape() { return type; }
 };
 

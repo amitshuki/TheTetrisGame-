@@ -61,16 +61,16 @@ void Board::BoardInit(Point _p, char* _keys) {
 
 void Board::addShape() {
 	//srand(time(NULL));
-	int blockType = 5;//rand() % 7;
+	int blockType = rand() % 7;
 	x = MID;
 	y = UP;
-
+	s.setShape(blockType);
 	for (size_t i = 0; i < 4; i++)
 	{
 		for (size_t j = 0; j < 4; j++)
 		{
 			block[i][j] = ' ';
-			block[i][j] = s.Shpes[blockType][j][i];
+			block[i][j] = s.Shapes[blockType][j][i];
 
 		}
 
@@ -120,7 +120,12 @@ bool Board::rotateBolck(int n)
 	char  temp[4][4];
 	char  Ttemp[4][4];//transopse
 
-	for (size_t i = 0; i < 4; i++)
+	if (s.getShape() == Shape::Shapes::cube)
+	{
+		return false;
+	}
+
+		for (size_t i = 0; i < 4; i++)
 	{ //Save temporarily block
 		for (size_t j = 0; j < 4; j++)
 		{

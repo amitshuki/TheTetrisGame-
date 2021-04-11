@@ -14,7 +14,7 @@ class Menu
 public:
 	int printMenu();
 	void printGameOver(int P);
-	void printInstruction();
+	char printInstruction();
 
 };
 

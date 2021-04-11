@@ -49,5 +49,6 @@ public:
 	void checkLine();
 	void refreshLines(int row);
 	void deleteLine(int row);
+	inline Point& getPoint() { return point; }
 };
 

@@ -42,7 +42,7 @@ void Menu::printGameOver(int p){
 
 
 
-void Menu::printInstruction()
+char Menu::printInstruction()
 {
 	char c = 'a';
 	system("cls");
@@ -58,5 +58,6 @@ void Menu::printInstruction()
 		c = _getch();
 	}
 	system("cls");
+	return c;
 	
 }

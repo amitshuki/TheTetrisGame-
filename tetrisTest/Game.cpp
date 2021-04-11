@@ -30,6 +30,7 @@ void Game::run() {
 			Sleep(555);
 
 			if (_kbhit()) {
+				
 				c = _getch();
 				while (c == ESC)
 				{
@@ -57,10 +58,9 @@ void Game::run() {
 				}
 
 				player_2.board.userInput(c);
-
 				player_1.board.userInput(c);
-
-				_flushall;
+				
+				
 			}
 			player_1.board.userInput(DOWN);
 			player_2.board.userInput(DOWN);

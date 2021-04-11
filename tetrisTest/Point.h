@@ -1,20 +1,18 @@
 #pragma once
 class Point
 {
-	int x;
-	int y;
-	bool inUse;
+	size_t x =0;
+	size_t y =0;
+	
 public:
-	Point(int _x, int _y) {
+	Point(size_t _x, size_t _y) {
 		x = _x;
 		y = _y;
-		inUse = false;
 	}
 	Point() {}
-	int getX() { return x; }
-	int getY() { return y; }
-	void setX(int x) { this->x=x; }
-	void setY(int y) { this->y = y; }
-	bool isInUse() { return inUse; }
+	inline size_t getX() { return x; }
+	inline size_t getY() { return y; }
+	inline void setX(size_t x) { this->x=x; }
+	inline void setY(size_t y) { this->y = y; }
 };
 

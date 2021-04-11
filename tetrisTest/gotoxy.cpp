@@ -4,7 +4,7 @@
 #include <process.h>
 using namespace std;
 
-void gotoxy(int x, int y)
+void gotoxy(size_t x, size_t y)
 {
 	HANDLE hConsoleOutput;
 	COORD dwCursorPosition;

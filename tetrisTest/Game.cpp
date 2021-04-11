@@ -22,6 +22,7 @@ void Game::run() {
 			key = 8;
 	}
 	while (key == 1) {
+		system("cls");
 		player_1.board.BoardInit(Point(6, 5), P1Keys);
 		player_2.board.BoardInit(Point(48, 5), P2Keys);
 
@@ -30,7 +31,6 @@ void Game::run() {
 			Sleep(555);
 
 			if (_kbhit()) {
-				
 				c = _getch();
 				while (c == ESC)
 				{
@@ -47,7 +47,7 @@ void Game::run() {
 						player_1.board.display();
 						player_2.board.printboard(player_2.board.getPoint());
 						player_2.board.display();
-						_flushall;
+						_flushall();
 						c = _getch();
 					}
 					if (c == '9') {
@@ -58,9 +58,10 @@ void Game::run() {
 				}
 
 				player_2.board.userInput(c);
+
 				player_1.board.userInput(c);
-				
-				
+
+				_flushall();
 			}
 			player_1.board.userInput(DOWN);
 			player_2.board.userInput(DOWN);
@@ -72,7 +73,7 @@ void Game::run() {
 			menu.printGameOver(isGameOver());
 		player_1.board.setGameOver(false);
 		player_2.board.setGameOver(false);
-		_flushall;
+		_flushall();
 		key = menu.printMenu();
 		Sleep(5000);
 

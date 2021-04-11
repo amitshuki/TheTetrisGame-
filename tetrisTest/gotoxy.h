@@ -3,5 +3,5 @@
 
 using namespace std;
 
-void gotoxy(int x, int y);
+void gotoxy(size_t x, size_t y);
 void clrscr();

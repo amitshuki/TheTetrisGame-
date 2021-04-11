@@ -22,7 +22,7 @@ void Game::run() {
 
 		while (isGameOver() == 0 && _kbhit() != ESC) {
 
-			Sleep(250);
+			Sleep(150);
 
 			if (_kbhit()) {
 				c = _getch();

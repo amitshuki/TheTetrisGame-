@@ -46,5 +46,8 @@ public:
 	bool isInBoard(int x, int y);
 	void FixBoard();
 	inline void setGameOver(bool a) { isgameOver = a; }
+	void checkLine();
+	void refreshLines(int row);
+	void deleteLine(int row);
 };
 

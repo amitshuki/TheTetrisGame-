@@ -61,7 +61,7 @@ void Board::BoardInit(Point _p, char* _keys) {
 
 void Board::addShape() {
 	//srand(time(NULL));
-	int blockType = (rand() + 3) % 7;
+	int blockType = 5;//rand() % 7;
 	x = MID;
 	y = UP;
 
@@ -156,17 +156,17 @@ bool Board::rotateBolck(int n)
 			}
 		}
 
-	//if (isCollide(x, y))
-	//{ // And stop if it overlaps not be rotated
-	//	for (size_t i = 0; i < 4; i++)
-	//	{
-	//		for (size_t j = 0; j < 4; j++)
-	//		{
-	//			block[i][j] = temp[i][j];
-	//		}
-	//	}
-	//	return true;
-	//}
+	if (isCollide(x, y))
+	{ // And stop if it overlaps not be rotated
+		for (size_t i = 0; i < 4; i++)
+		{
+			for (size_t j = 0; j < 4; j++)
+			{
+				block[i][j] = temp[i][j];
+			}
+		}
+		return true;
+	}
 		return false;
 
 }
@@ -196,7 +196,7 @@ void Board::userInput(char key)
 		if (!isCollide(x - 1, y) && isInBoard(x - 1, y))
 		{
 			moveBlock(x - 1, y);
-			display();
+			
 		}
 	}
 
@@ -204,7 +204,7 @@ void Board::userInput(char key)
 		if (!isCollide(x + 1, y) && isInBoard(x + 1, y))
 		{
 			moveBlock(x + 1, y);
-			display();
+			
 		}
 	}
 
@@ -215,7 +215,7 @@ void Board::userInput(char key)
 			moveBlock(x, y + 1);
 
 		}
-		display();
+		
 		spwanBlock();
 
 	}
@@ -232,13 +232,13 @@ void Board::userInput(char key)
 		if (!isCollide(x, y + 1) && isInBoard(x, y + 1))
 		{
 			moveBlock(x, y + 1);
-			display();
+		
 			if (y == ROWS + 1 || isCollide(x, y + 1))
 				spwanBlock();
 		}
 	}
-
-	_flushall();
+	display();
+	_flushall;
 }
 
 
@@ -251,7 +251,9 @@ void Board::spwanBlock()
 	}
 	else
 	{
+		
 		FixBoard();
+		checkLine();
 		addShape();
 	}
 }
@@ -298,6 +300,60 @@ void Board::collide() {
 	}
 
 }
+
+
+void Board::checkLine()
+{
+	for (int j = 0; j < ROWS; j++)
+	{
+		
+		int counter = 0;
+		  
+		for (int i = 0; i < COLS; i++) {
+			if (boardGame[i][j] == ' ')
+				break;
+			else
+				counter++;
+
+			if (counter == COLS)
+			{
+				deleteLine(j);
+				refreshLines(j);
+			}
+		}
+	}
+}
+
+void Board::deleteLine( int col)
+{
+	for (int i = 0; i < COLS ; i++)
+	{
+		boardGame[i][col] = ' ';
+	}
+}
+
+
+void Board::refreshLines(int col)
+{
+	int counter = 0;
+
+	for (int i = col + 1; i <= 0; i--)
+	{
+		for (int j = 0; j < COLS; j++)
+		{
+			if (boardGame[i][j] != ' ')
+			{
+				boardGame[j][i-1] = boardGame[j][i];
+				boardGame[j][i] = ' ';
+			}
+			else
+				counter++;
+		}
+		if (counter == COLS)
+			return;
+	}
+}
+
 
 
 

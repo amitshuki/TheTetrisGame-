@@ -19,4 +19,15 @@ void clrscr()
 {
 	system("cls");
 }
+bool clearKeyboardBuffer()
+{
+	char junk;
+	while (_kbhit())
+	{
+		junk = _getch();
+		if (junk == 27)//ESC key
 
+			return false;
+	}
+	return true;
+}

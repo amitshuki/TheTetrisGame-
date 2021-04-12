@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include"Menu.h"
+//#include"Menu.h"
 #include "Board.h"
 #include <iostream>
 #include <stdlib.h>
@@ -9,15 +9,19 @@
 #include <windows.h>
 #include <time.h>
 
+
 class Game
 {
 	Player player_1;
 	Player player_2;
-	Menu menu;
+	//Menu menu;
 
 public:
-	void run();
+	int  run();
 	int isGameOver();
+	void userInput();
+	int resume();
+	friend class Menu;
 
 };
 

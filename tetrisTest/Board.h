@@ -26,6 +26,8 @@ class Board
 	int y = 0;
 	bool isgameOver = false;
 	char Keys[5];
+
+
 	bool isCollide(int x,int y);
 	void checkLine();
 	void refreshLines(int row);
@@ -46,5 +48,13 @@ public:
 	void userInput(char key);
 	inline void setGameOver(bool a) { isgameOver = a; }
 	inline Point& getPoint() { return point; }
+	inline void setPoint( Point _p) {
+		point.setX(_p.getX()); 
+	point.setY(_p.getY());
+	}
+	inline char getKey(int i) { if(0<i<5) return Keys[i]; }
+	void setKeys(char* key);
+	inline void SetGlobCord(int _x, int _y) { x = _x; y = _y; }
+	void clearBlock();
 };
 

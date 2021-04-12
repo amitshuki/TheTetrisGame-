@@ -188,7 +188,7 @@ bool Board::isCollide(int x, int y)
 	return false;
 }
 
-void Board::userInput(char key)
+void Board::userInput(char key='0')
 {
 	int diff = 'a' - 'A';
 
@@ -238,7 +238,16 @@ void Board::userInput(char key)
 		}
 	}
 	display();
-	_flushall();
+	
+}
+
+void Board::clearBlock() {
+	for (size_t i = 0; i < BLOCKSIZE; i++) {
+		for (size_t j = 0; j < BLOCKSIZE; j++) {
+			if (block[i][j] == '&')
+				block[i][j] = ' ';
+		}
+	}
 }
 
 
@@ -335,27 +344,30 @@ void Board::deleteLine( int col)
 
 void Board::refreshLines(int col)
 {
-	int counter = 0;
+	
 
-	for (size_t i = col + 1; i <= 0; i--)
+	for(size_t i = col ; i > 1; i--)
 	{
 		for (size_t j = 0; j < COLS; j++)
 		{
-			if (boardGame[i][j] != ' ')
-			{
-				boardGame[j][i-1] = boardGame[j][i];
-				boardGame[j][i] = ' ';
-			}
-			else
-				counter++;
+			
+			
+			boardGame[j][i] = boardGame[j][i-1];
+			//boardGame[j][i-1] = ' ';
+			
+			
 		}
-		if (counter == COLS)
-			return;
+	
 	}
+	
 }
 
 
-
+void Board::setKeys(char* key) {
+	for (size_t i = 0; i < 5; i++) {
+		Keys[i] = key[i];
+	}
+}
 
 
 

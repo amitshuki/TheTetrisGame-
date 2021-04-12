@@ -3,18 +3,21 @@
 #include<conio.h>
 #include"gotoxy.h"
 #include <windows.h>
+
 #include "Board.h"
+#include "Game.h"
 
 using namespace std;
 class Menu
 {
+	Game game;
 	int x=20;
 	int y=10;
 
 public:
-	int printMenu();
+	void printMenu();
 	void printGameOver(int P);
-	char printInstruction();
+	void printInstruction();
 
 };
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-//#include"Menu.h"
+
 #include "Board.h"
 #include <iostream>
 #include <stdlib.h>
@@ -14,7 +14,7 @@ class Game
 {
 	Player player_1;
 	Player player_2;
-	//Menu menu;
+
 
 public:
 	int  run();

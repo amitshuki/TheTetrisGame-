@@ -34,7 +34,8 @@ void Menu::printMenu() {
 			printGameOver(p);
 			break;
 		case '2':
-			if (firstrun == true && (p==0)) {//if this is not the first game before run and if we get push from run
+			if (firstrun == true && (p==0)) {
+				
 				p = game.resume();
 				printGameOver(p);
 			}

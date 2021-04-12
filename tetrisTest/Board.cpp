@@ -71,7 +71,7 @@ void Board::addShape() {
 
 	}
 
-	if (isCollide(x, y+1)) {
+	if (isCollide(x, y + 1)) {
 		isgameOver = true;
 		return;
 	}
@@ -83,7 +83,7 @@ void Board::addShape() {
 			boardGame[i + 5][j] = block[i][j];
 		}
 	}
-	
+
 }
 
 void Board::moveBlock(int _x, int _y)
@@ -120,7 +120,7 @@ bool Board::rotateBolck(int n)
 		return false;
 	}
 
-		for (size_t i = 0; i < BLOCKSIZE; i++)
+	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{ //Save temporarily block
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
@@ -130,31 +130,31 @@ bool Board::rotateBolck(int n)
 	}
 
 
+	for (size_t i = 0; i < BLOCKSIZE; i++)
+	{ //Rotate
+		for (size_t j = 0; j < BLOCKSIZE; j++)
+		{
+			Ttemp[i][j] = temp[j][i];
+		}
+	}
+	if (n == 0) {
 		for (size_t i = 0; i < BLOCKSIZE; i++)
 		{ //Rotate
 			for (size_t j = 0; j < BLOCKSIZE; j++)
 			{
-				Ttemp[i][j] = temp[j][i];
+				block[i][3 - j] = Ttemp[i][j];
 			}
 		}
-		if (n == 0) {
-			for (size_t i = 0; i < BLOCKSIZE; i++)
-			{ //Rotate
-				for (size_t j = 0; j < BLOCKSIZE; j++)
-				{
-					block[i][3 - j] = Ttemp[i][j];
-				}
+	}
+	if (n == 1) {
+		for (size_t i = 0; i < BLOCKSIZE; i++)
+		{ //Rotate
+			for (size_t j = 0; j < BLOCKSIZE; j++)
+			{
+				block[3 - i][j] = Ttemp[i][j];
 			}
 		}
-		if (n == 1) {
-			for (size_t i = 0; i < BLOCKSIZE; i++)
-			{ //Rotate
-				for (size_t j = 0; j < BLOCKSIZE; j++)
-				{
-					block[3 - i][ j] = Ttemp[i][j];
-				}
-			}
-		}
+	}
 
 	if (isCollide(x, y))
 	{ // And stop if it overlaps not be rotated
@@ -167,7 +167,7 @@ bool Board::rotateBolck(int n)
 		}
 		return true;
 	}
-		return false;
+	return false;
 
 }
 
@@ -188,7 +188,7 @@ bool Board::isCollide(int x, int y)
 	return false;
 }
 
-void Board::userInput(char key='0')
+void Board::userInput(char key = '0')
 {
 	int diff = 'a' - 'A';
 
@@ -196,7 +196,7 @@ void Board::userInput(char key='0')
 		if (!isCollide(x - 1, y) && isInBoard(x - 1, y))
 		{
 			moveBlock(x - 1, y);
-			
+
 		}
 	}
 
@@ -204,7 +204,7 @@ void Board::userInput(char key='0')
 		if (!isCollide(x + 1, y) && isInBoard(x + 1, y))
 		{
 			moveBlock(x + 1, y);
-			
+
 		}
 	}
 
@@ -215,15 +215,15 @@ void Board::userInput(char key='0')
 			moveBlock(x, y + 1);
 
 		}
-		
+
 		spwanBlock();
 
 	}
-		else if (key == Keys[3] || key == Keys[3] - diff)
-			rotateBolck(0);
+	else if (key == Keys[3] || key == Keys[3] - diff)
+		rotateBolck(0);
 
-		else if (key == Keys[2] || key == Keys[2] - diff)
-			rotateBolck(1);
+	else if (key == Keys[2] || key == Keys[2] - diff)
+		rotateBolck(1);
 
 
 	else if (key == '0') {
@@ -232,13 +232,13 @@ void Board::userInput(char key='0')
 		if (!isCollide(x, y + 1) && isInBoard(x, y + 1))
 		{
 			moveBlock(x, y + 1);
-		
+
 			if (y == ROWS + 1 || isCollide(x, y + 1))
 				spwanBlock();
 		}
 	}
 	display();
-	
+
 }
 
 void Board::clearBlock() {
@@ -260,7 +260,7 @@ void Board::spwanBlock()
 	}
 	else
 	{
-		
+
 		FixBoard();
 		checkLine();
 		addShape();
@@ -315,9 +315,9 @@ void Board::checkLine()
 {
 	for (size_t j = 0; j < ROWS; j++)
 	{
-		
+
 		int counter = 0;
-		  
+
 		for (size_t i = 0; i < COLS; i++) {
 			if (boardGame[i][j] == ' ')
 				break;
@@ -333,9 +333,9 @@ void Board::checkLine()
 	}
 }
 
-void Board::deleteLine( int col)
+void Board::deleteLine(int col)
 {
-	for (size_t i = 0; i < COLS ; i++)
+	for (size_t i = 0; i < COLS; i++)
 	{
 		boardGame[i][col] = ' ';
 	}
@@ -344,22 +344,15 @@ void Board::deleteLine( int col)
 
 void Board::refreshLines(int col)
 {
-	
 
-	for(size_t i = col ; i > 1; i--)
+
+	for (size_t i = col; i > 1; i--)
 	{
 		for (size_t j = 0; j < COLS; j++)
 		{
-			
-			
-			boardGame[j][i] = boardGame[j][i-1];
-			//boardGame[j][i-1] = ' ';
-			
-			
+			boardGame[j][i] = boardGame[j][i - 1];
 		}
-	
 	}
-	
 }
 
 

@@ -22,10 +22,8 @@ class Board
 	Shape s;
 	char block[4][4];
 	Point point;
-	//block start cord
 	int x = 5;
-	int y = 0; 
-
+	int y = 0;
 	bool isgameOver = false;
 	char Keys[5];
 

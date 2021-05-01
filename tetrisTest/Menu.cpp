@@ -21,8 +21,8 @@ void Menu::printMenu() {
 		cout << "Press -9- to Exit" << endl;
 		key = _getch();
 		Game game;
-		char P1Keys[5] = { 'a','d','w','s','x' };
-		char P2Keys[5] = { 'j','l','i','k','m' };
+		char P1Keys[5] = { 'A','D','W','S','X' };
+		char P2Keys[5] = { 'J','L','I','K','M' };
 		
 		system("cls");
 		switch (key) {

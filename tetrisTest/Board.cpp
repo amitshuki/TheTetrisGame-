@@ -22,7 +22,7 @@ void Board::display()
 {
 	int y = point.getY();// cahseing
 	int x = point.getX();// cahseing
-	gotoxy(x, y - 1);
+
 	for (size_t i = 0; i < COLS; i++) {
 		for (size_t j = 0; j < ROWS; j++) {
 			gotoxy(x + i, y + j);
@@ -37,6 +37,7 @@ void Board::display()
 void Board::BoardInit(Point _p, char* _keys) {
 	point.setX(_p.getX());
 	point.setY(_p.getY());
+	block.board = this;//for the forward declaration
 
 	for (size_t i = 0; i < 5; i++) {
 		Keys[i] = _keys[i];
@@ -55,23 +56,9 @@ void Board::BoardInit(Point _p, char* _keys) {
 }
 
 void Board::addShape() {
-	//srand(time(NULL));
-	int blockType = rand() % 7;
-	x = MID;
-	y = UP;
-	s.setShape(blockType);
-	for (size_t i = 0; i < BLOCKSIZE; i++)
-	{
-		for (size_t j = 0; j < BLOCKSIZE; j++)
-		{
-			block[i][j] = ' ';
-			block[i][j] = s.Shapes[blockType][j][i];
+	block.updateblock();
 
-		}
-
-	}
-
-	if (isCollide(x, y + 1)) {
+	if (isCollide(block.getX(), block.getY() + 1)) {
 		isgameOver = true;
 		return;
 	}
@@ -80,23 +67,25 @@ void Board::addShape() {
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			boardGame[i + 5][j] = block[i][j];
+			boardGame[i + 5][j] = block.getBlockChar(i, j);
 		}
 	}
 
 }
 
-void Board::moveBlock(int _x, int _y)
+void Board::removeBlock(int _x, int _y)
 {
-
+	if (_x == 10 && _y == 9) {
+		cout << "what ";
+	}
 	//Remove block
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
 
-			if (boardGame[x + i][y + j] == '&')
-				boardGame[x + i][y + j] = ' ';
+			if (boardGame[(block.getX() ) + i][(block.getY() + j)] == '&')
+				boardGame[(block.getX() ) + i][(block.getY() + j)] = ' ';
 
 
 		}
@@ -104,72 +93,13 @@ void Board::moveBlock(int _x, int _y)
 
 
 	//Update coordinates
-	x = _x;
-	y = _y;
+	block.setX(_x);
+	block.setY(_y);
 	collide();
 
 }
 
-bool Board::rotateBolck(int n)
-{
-	char  temp[BLOCKSIZE][BLOCKSIZE];
-	char  Ttemp[BLOCKSIZE][BLOCKSIZE];//transopse
 
-	if (s.getShape() == Shape::Shapes::cube)
-	{
-		return false;
-	}
-
-	for (size_t i = 0; i < BLOCKSIZE; i++)
-	{ //Save temporarily block
-		for (size_t j = 0; j < BLOCKSIZE; j++)
-		{
-			temp[i][j] = block[i][j];
-			block[i][j] = ' ';
-		}
-	}
-
-
-	for (size_t i = 0; i < BLOCKSIZE; i++)
-	{ //Rotate
-		for (size_t j = 0; j < BLOCKSIZE; j++)
-		{
-			Ttemp[i][j] = temp[j][i];
-		}
-	}
-	if (n == 0) {
-		for (size_t i = 0; i < BLOCKSIZE; i++)
-		{ //Rotate
-			for (size_t j = 0; j < BLOCKSIZE; j++)
-			{
-				block[i][3 - j] = Ttemp[i][j];
-			}
-		}
-	}
-	if (n == 1) {
-		for (size_t i = 0; i < BLOCKSIZE; i++)
-		{ //Rotate
-			for (size_t j = 0; j < BLOCKSIZE; j++)
-			{
-				block[3 - i][j] = Ttemp[i][j];
-			}
-		}
-	}
-
-	if (isCollide(x, y))
-	{ // And stop if it overlaps not be rotated
-		for (size_t i = 0; i < BLOCKSIZE; i++)
-		{
-			for (size_t j = 0; j < BLOCKSIZE; j++)
-			{
-				block[i][j] = temp[i][j];
-			}
-		}
-		return true;
-	}
-	return false;
-
-}
 
 
 bool Board::isCollide(int x, int y)
@@ -178,9 +108,9 @@ bool Board::isCollide(int x, int y)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (block[i][j] == '&')
+			if ('&' == block.getBlockChar(i,j))
 			{
-				if (boardGame[x + i][y + j] == '#' || x < 0 || x + i == COLS || y + j == ROWS)
+				if (boardGame[x + i][y + j] == '#' || x < 0 || x + i  == COLS || y + j == ROWS)
 					return true;
 			}
 		}
@@ -188,53 +118,51 @@ bool Board::isCollide(int x, int y)
 	return false;
 }
 
-void Board::userInput(char key = '0')
+void Board::userInput(char key)
 {
-	int diff = 'a' - 'A';
 
-	if (key == Keys[0] || key == Keys[0] - diff) {
-		if (!isCollide(x - 1, y) && isInBoard(x - 1, y))
+	if (key == Keys[0]) {
+		if (!isCollide(block.getX() - 1, block.getY()) && isInBoard(block.getX() - 1, block.getY()))
 		{
-			moveBlock(x - 1, y);
+			removeBlock(block.getX() - 1, block.getY());
 
 		}
 	}
 
-	else if (key == Keys[1] || key == Keys[1] - diff) {
-		if (!isCollide(x + 1, y) && isInBoard(x + 1, y))
+	else if (key == Keys[1]) {
+		if (!isCollide(block.getX() + 1, block.getY()) && isInBoard(block.getX() + 1, block.getY()))
 		{
-			moveBlock(x + 1, y);
+			removeBlock((block.getX() + 1), block.getY());
 
 		}
 	}
-
-	else if (key == Keys[BLOCKSIZE] || key == Keys[BLOCKSIZE] - diff) {
-		while (!isCollide(x, y + 1) && isInBoard(x, y + 1))
+	else if (key == Keys[4]) {
+		while (!isCollide(block.getX(), block.getY() + 1) && isInBoard(block.getX(), block.getY() + 1))
 		{
 
-			moveBlock(x, y + 1);
-
+			removeBlock(block.getX(), block.getY() + 1);
+			
 		}
 
-		spwanBlock();
+		block.spwanBlock();
 
 	}
-	else if (key == Keys[3] || key == Keys[3] - diff)
-		rotateBolck(0);
+	else if (key == Keys[3])
+		block.rotateBolck(0);
 
-	else if (key == Keys[2] || key == Keys[2] - diff)
-		rotateBolck(1);
-
-
-	else if (key == '0') {
+	else if (key == Keys[2])
+		block.rotateBolck(1);
 
 
-		if (!isCollide(x, y + 1) && isInBoard(x, y + 1))
+	else if (key == 0) {
+
+
+		if (!isCollide(block.getX(), block.getY() + 1) && isInBoard(block.getX(), block.getY() + 1))
 		{
-			moveBlock(x, y + 1);
+			removeBlock(block.getX(), block.getY() + 1);
 
-			if (y == ROWS + 1 || isCollide(x, y + 1))
-				spwanBlock();
+			if (block.getY() == (ROWS + 1) || isCollide(block.getX(), block.getY() + 1))
+				block.spwanBlock();
 		}
 	}
 	display();
@@ -244,28 +172,14 @@ void Board::userInput(char key = '0')
 void Board::clearBlock() {
 	for (size_t i = 0; i < BLOCKSIZE; i++) {
 		for (size_t j = 0; j < BLOCKSIZE; j++) {
-			if (block[i][j] == '&')
-				block[i][j] = ' ';
+			if (block.getBlockChar(i, j) == '&')
+				block.SetBlockChar(i, j, ' ');
 		}
 	}
 }
 
 
 
-void Board::spwanBlock()
-{
-	if (!isCollide(x, y + 1))
-	{
-		moveBlock(x, y + 1);
-	}
-	else
-	{
-
-		FixBoard();
-		checkLine();
-		addShape();
-	}
-}
 
 
 
@@ -279,7 +193,6 @@ bool Board::isInBoard(int x, int y) {
 				if (boardGame[x + i][y + j] == ' ') {
 					return true;
 				}
-
 			}
 		}
 	}
@@ -297,13 +210,17 @@ void Board::FixBoard() {
 }
 
 void Board::collide() {
-
+	int _x = block.getX();
+	int _y = block.getY();
+	if (_y == 9&& _x>=8) {
+		cout << "yo ";
+	}
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (block[i][j] != ' ')
-				boardGame[x + i][y + j] = block[i][j];
+			if (block.getBlockChar(i, j) != ' ')
+				boardGame[(_x + i)][(_y + j)] = block.getBlockChar(i, j);
 		}
 
 	}

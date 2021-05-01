@@ -1,11 +1,10 @@
 #include "Game.h"
-enum { DOWN = '0' };
-enum { ESC = 27 };
+
 
 int Game::run() {
 	while (isGameOver() == 0) {
 
-		Sleep(555);
+		Sleep(GAMESLEEP);
 		player_1.board.userInput(DOWN);
 		player_2.board.userInput(DOWN);
 		userInput();
@@ -18,13 +17,14 @@ int Game::run() {
 
 	}
 	if (isGameOver() != 0) return isGameOver();
+	return 1;
 }
 
 int Game::resume() {
-	
+
 	player_1.board.setPoint(Point(6, 5));
 	player_2.board.setPoint(Point(48, 5));
-	
+
 	player_1.board.printboard(player_1.board.getPoint());
 	player_1.board.display();
 	player_2.board.printboard(player_2.board.getPoint());
@@ -49,21 +49,19 @@ int Game::isGameOver() {
 
 
 void Game::userInput() {
-	char temp;
-	char c1, c2;
-	c2 = c1 = '0';
 
+	char keySelction[2] = {};
+	
 	for (size_t i = 0; i < 10; i++) {
 		if (_kbhit()) {
-			temp = _getch();
-
+			char key = toupper(_getch());
 			for (size_t j = 0; j < 5; j++) {
-				if (temp == player_1.board.getKey(j) || temp == player_1.board.getKey(j) - 32) c1 = temp;
-				if (temp == player_2.board.getKey(j) || temp == player_2.board.getKey(j) - 32) c2 = temp;
+				if (key == player_1.board.getKey(j)) keySelction[0] = key;
+				if (key == player_2.board.getKey(j)) keySelction[1] = key;
 			}
 		}
 	}
-	player_2.board.userInput(c2);
-	player_1.board.userInput(c1);
+	player_2.board.userInput(keySelction[1]);
+	player_1.board.userInput(keySelction[0]);
 
 }

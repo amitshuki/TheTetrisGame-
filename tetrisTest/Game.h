@@ -10,10 +10,14 @@
 #include <time.h>
 
 
+
 class Game
 {
 	Player player_1;
 	Player player_2;
+	enum { DOWN = 0 };
+	enum { ESC = 27 };
+	enum { GAMESLEEP = 550 };
 
 
 public:

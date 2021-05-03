@@ -86,7 +86,7 @@ void Board::removeBlock(int _x, int _y)
 		{
 			if (x + i >= COLS || y + j >= ROWS)
 				break;
-			if (boardGame[x + i][(y + j)] == '&')
+			if (boardGame[x + i][(y + j)] == '&'|| boardGame[x + i][(y + j)]=='N')
 				boardGame[x + i][(y + j)] = ' ';
 		}
 	}
@@ -108,7 +108,7 @@ bool Board::isCollide(int x, int y)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if ('&' == block.getBlockChar(i,j))
+			if ('&' == block.getBlockChar(i,j)|| block.getBlockChar(i, j)=='N')
 			{
 				if (boardGame[x + i][y + j] == '#' || x < 0 || x + i  == COLS || y + j == ROWS)
 					return true;
@@ -205,6 +205,19 @@ void Board::FixBoard() {
 			if (boardGame[i][j] == '&') {
 				boardGame[i][j] = '#';
 			}
+			if (boardGame[i][j] == 'N') {
+				
+				
+
+				for (int t = i - 4; t < i + 3; t++) {
+					for (int k = j - 4; k < j + 3; k++) {
+						if (t > 0 && t < COLS && k < ROWS) {
+							boardGame[t][k] = ' ';
+						}
+				}
+				}
+
+			}
 			
 		}
 	}
@@ -218,7 +231,7 @@ void Board::collide() {
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (block.getBlockChar(i, j) == '&')
+			if (block.getBlockChar(i, j) == '&'|| block.getBlockChar(i, j) == 'N')
 				boardGame[(_x + i)][(_y + j)] = block.getBlockChar(i, j);
 		}
 

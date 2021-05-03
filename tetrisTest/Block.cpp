@@ -7,6 +7,7 @@ void Block::updateblock() {
 	setX(MID);
 	setY(UP);
 	s.setShape(blockType);
+	type = blockType;
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)

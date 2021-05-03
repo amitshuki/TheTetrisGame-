@@ -4,8 +4,8 @@
 void Block::updateblock() {
 	
 	int blockType = rand() % 7;
-	x = MID;
-	y = UP;
+	setX(MID);
+	setY(UP);
 	s.setShape(blockType);
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
@@ -78,9 +78,9 @@ bool Block::rotateBolck(int n) {
 }
 void Block::spwanBlock()
 {
-	if (!(board->isCollide(x, y + 1)))
+	if (!(board->isCollide(x, (y + 1))))
 	{
-		board->removeBlock(getX(), getY() + 1);
+		board->removeBlock(getX(), (getY() + 1));
 	}
 	else
 	{

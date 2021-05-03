@@ -20,8 +20,8 @@ void Board::printboard(Point p)
 
 void Board::display()
 {
-	int y = point.getY();// cahseing
-	int x = point.getX();// cahseing
+	size_t y = point.getY();// cahseing
+	size_t x = point.getX();// cahseing
 
 	for (size_t i = 0; i < COLS; i++) {
 		for (size_t j = 0; j < ROWS; j++) {
@@ -58,7 +58,7 @@ void Board::BoardInit(Point _p, char* _keys) {
 void Board::addShape() {
 	block.updateblock();
 
-	if (isCollide(block.getX(), block.getY() + 1)) {
+	if (isCollide(block.getX(), (block.getY() + 1))) {
 		isgameOver = true;
 		return;
 	}
@@ -67,7 +67,8 @@ void Board::addShape() {
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			boardGame[i + 5][j] = block.getBlockChar(i, j);
+			char c = block.getBlockChar(i, j);
+			boardGame[i + 5][j] = c;
 		}
 	}
 

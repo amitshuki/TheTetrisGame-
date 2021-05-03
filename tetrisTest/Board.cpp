@@ -49,9 +49,9 @@ void Board::BoardInit(Point _p, char* _keys) {
 			boardGame[i][j] = ' ';
 		}
 	}
-	this->printboard(_p);
-	this->addShape();
-	this->display();
+	printboard(_p);
+	addShape();
+	display();
 
 }
 
@@ -74,19 +74,20 @@ void Board::addShape() {
 
 }
 
-void Board::removeBlock(int _x, int _y)
+void Board::removeBlock(int _x, int _y) 
 {
 	 const int x = block.getX();
 	 const int y = block.getY();
 	//Remove block
+
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
+			if (x + i >= COLS || y + j >= ROWS)
+				break;
 			if (boardGame[x + i][(y + j)] == '&')
 				boardGame[x + i][(y + j)] = ' ';
-
-
 		}
 	}
 
@@ -153,7 +154,7 @@ void Board::userInput(char key)
 		block.rotateBolck(1);
 
 
-	else if (key == 0) {
+	
 
 
 		if (!isCollide(block.getX(), block.getY() + 1) && isInBoard(block.getX(), block.getY() + 1))
@@ -163,7 +164,7 @@ void Board::userInput(char key)
 			if (block.getY() == (ROWS + 1) || isCollide(block.getX(), block.getY() + 1))
 				block.spwanBlock();
 		}
-	}
+	
 	display();
 
 }

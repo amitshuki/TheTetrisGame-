@@ -3,7 +3,7 @@
 
 void Block::updateblock() {
 	
-	int blockType = rand() % 7;
+	int blockType = rand() %8;
 	setX(MID);
 	setY(UP);
 	s.setShape(blockType);

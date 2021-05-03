@@ -59,6 +59,6 @@ public:
 	void clearBlock();
 	void FixBoard();
 	void addShape();
-	void removeBlock(int _x, int _y);
+	void removeBlock(int _x, int _y) ;
 	void checkLine();
 };

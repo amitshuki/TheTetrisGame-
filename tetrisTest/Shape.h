@@ -3,9 +3,9 @@ class Shape
 {
     int type;
 public:
-    enum Shapes { Line, LShape, Zshape, Sshape, plus, cube, Jshape };
+    enum Shapes { Line, LShape, Zshape, Sshape, plus, cube, Jshape ,BOMB};
 
-    char Shapes[7][4][4] =
+    char Shapes[8][4][4] =
     {
 {
     { '&', ' ', ' ', ' ' },
@@ -14,7 +14,7 @@ public:
     { '&', ' ', ' ', ' ' }
 },
 {
-   
+
     {  '&', '&', ' ',' ' },
     {  '&', ' ', ' ',' ' },
     {  '&', ' ', ' ' ,' '},
@@ -33,7 +33,7 @@ public:
     { ' ', ' ', ' ', ' ' }
 },
 {
-    
+
     { ' ', '&', ' ', ' ' },
     { '&', '&', '&', ' ' },
     { ' ', ' ', ' ', ' ' },
@@ -50,7 +50,12 @@ public:
     { ' ', '&', ' ', ' ' },
     { ' ', '&', ' ', ' ' },
     { ' ', ' ', ' ', ' ' }
-}
+},
+{   { 'N', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ' },
+    { ' ', ' ', ' ', ' ' }
+        },
     };
     void setShape(int shape) { type = shape; }
     int getShape() { return type; }

@@ -75,17 +75,15 @@ void Board::addShape() {
 
 void Board::removeBlock(int _x, int _y)
 {
-	if (_x == 10 && _y == 9) {
-		cout << "what ";
-	}
+	 const int x = block.getX();
+	 const int y = block.getY();
 	//Remove block
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-
-			if (boardGame[(block.getX() ) + i][(block.getY() + j)] == '&')
-				boardGame[(block.getX() ) + i][(block.getY() + j)] = ' ';
+			if (boardGame[x + i][(y + j)] == '&')
+				boardGame[x + i][(y + j)] = ' ';
 
 
 		}
@@ -205,6 +203,7 @@ void Board::FixBoard() {
 			if (boardGame[i][j] == '&') {
 				boardGame[i][j] = '#';
 			}
+			
 		}
 	}
 }
@@ -212,14 +211,12 @@ void Board::FixBoard() {
 void Board::collide() {
 	int _x = block.getX();
 	int _y = block.getY();
-	if (_y == 9&& _x>=8) {
-		cout << "yo ";
-	}
+	
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (block.getBlockChar(i, j) != ' ')
+			if (block.getBlockChar(i, j) == '&')
 				boardGame[(_x + i)][(_y + j)] = block.getBlockChar(i, j);
 		}
 

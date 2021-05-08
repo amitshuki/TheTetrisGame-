@@ -21,10 +21,10 @@ class Board
 	char wall = '|';
 	Point point;
 	//block start cord
-	Block block;
+	
 	bool isgameOver = false;
 	char Keys[5];
-
+	
 
 
 
@@ -38,6 +38,7 @@ class Board
 
 
 public:
+	Block block;
 	bool isCollide(int x, int y);
 	bool getIsGameOVER() { return isgameOver; };
 	void BoardInit(Point _p, char* _keys);
@@ -61,4 +62,6 @@ public:
 	void addShape();
 	void removeBlock(int _x, int _y) ;
 	void checkLine();
+	char getChar(int i, int j) { return boardGame[i][j]; }
+	char getBlockChar(int i, int j) { return block.getBlockChar(i,j); }
 };

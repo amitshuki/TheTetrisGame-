@@ -5,8 +5,7 @@ int Game::run() {
 	while (isGameOver() == 0) {
 
 		Sleep(GAMESLEEP);
-		player_1.board.userInput(DOWN);
-		player_2.board.userInput(DOWN);
+		
 		userInput();
 		if (!clearKeyboardBuffer()) {
 

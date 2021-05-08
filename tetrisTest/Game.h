@@ -17,7 +17,7 @@ class Game
 	Player player_2;
 	enum { DOWN = 0 };
 	enum { ESC = 27 };
-	enum { GAMESLEEP = 550 };
+	enum { GAMESLEEP = 700 };
 
 
 public:

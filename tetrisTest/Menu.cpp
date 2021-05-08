@@ -23,8 +23,10 @@ void Menu::printMenu() {
 		Game game;
 		char P1Keys[5] = { 'A','D','W','S','X' };
 		char P2Keys[5] = { 'J','L','I','K','M' };
-		
 		system("cls");
+
+		
+		
 		switch (key) {
 		case '1':
 			game.player_1.board.BoardInit(Point(6, 5), P1Keys);

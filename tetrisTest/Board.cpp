@@ -209,8 +209,8 @@ void Board::FixBoard() {
 				
 				
 
-				for (int t = i - 4; t < i + 3; t++) {
-					for (int k = j - 4; k < j + 3; k++) {
+				for (int t = i - 4; t < i + 4; t++) {
+					for (int k = j - 4; k < j + 4; k++) {
 						if (t > 0 && t < COLS && k < ROWS) {
 							boardGame[t][k] = ' ';
 						}

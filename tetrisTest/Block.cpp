@@ -3,10 +3,16 @@
 
 void Block::updateblock() {
 	
-	int blockType = rand() %8;
+	int blockType = rand() %7;
 	setX(MID);
 	setY(UP);
+	int t= rand() % 20;//5%
+	if (t == Shape::BOMB) {
+		s.setShape(Shape::BOMB);
+	}
+	else
 	s.setShape(blockType);
+	
 	type = blockType;
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{

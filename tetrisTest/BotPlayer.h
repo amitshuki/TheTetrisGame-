@@ -6,5 +6,7 @@ class BotPlayer :Player
 	void playerFlow();
 	int spaceCounter(int row);
 	size_t findShapeByRotate(int spaces);
+	int* hightisArray();
+	int findSpacesSequence(int* arr, int* maxCounter);
 };
 

@@ -39,56 +39,8 @@ int BotPlayer::spaceCounter(int row)
 
 size_t BotPlayer::findShapeByRotate(int spaces)
 {
-	int baseCount = 0, baseCountMax = 0;
-	//char  temp[BLOCKSIZE][BLOCKSIZE];
-	////char  Ttemp[BLOCKSIZE][BLOCKSIZE];//transopse
+	char temp[BLOCKSIZE][BLOCKSIZE] = board;
 
-	//for (size_t i = 0; i < BLOCKSIZE; i++)
-	//{ //Save temporarily block
-	//	for (size_t j = 0; j < BLOCKSIZE; j++)
-	//	{
-	//		temp[i][j] = board.getBlockChar(i, j);
-	//	}
-	//}
-
-	for (size_t i = 0; i < BLOCKSIZE; i++)
-	{
-		if (i = 0)
-		{
-			board.block.rotateBolck(0);
-			baseCount = checkBaseCount();
-			if (baseCount == spaces)
-				return i;
-			if (baseCount > baseCountMax)
-				baseCountMax = baseCount;
-		}
-		if (i == 1)
-		{
-			baseCount = checkBaseCount();
-			if (baseCount == spaces)
-				return i;
-			if (baseCount > baseCountMax)
-				baseCountMax = baseCount;
-		}
-		if (i == 2)
-		{
-			board.block.rotateBolck(1);
-			baseCount = checkBaseCount();
-			if (baseCount == spaces)
-				return i;
-			if (baseCount > baseCountMax)
-				baseCountMax = baseCount;
-		}
-		if (i == 3)
-		{
-			board.block.rotateBolck(1);
-			baseCount = checkBaseCount();
-			if (baseCount == spaces)
-				return i;
-			if (baseCount > baseCountMax)
-				baseCountMax = baseCount;
-		}
-	}
 }
 
 //
@@ -104,3 +56,47 @@ size_t BotPlayer::findShapeByRotate(int spaces)
 //	}
 //	return nullptr;
 //}
+
+int* BotPlayer::hightisArray() {
+	int* arr = new int[COLS];
+
+	for (size_t i = 0; i < COLS; i++) {
+		for (size_t j = 0; j < ROWS; j++)
+			if (board.getBlockChar(i,j) == '#' || j == ROWS - 1) {
+				arr[i] = j;
+				break;
+			}
+				
+	
+	}
+	return arr;
+
+}
+
+int BotPlayer::findSpacesSequence(int* arr, int * maxCounter) {
+	int min = arr[0];
+	
+	for (size_t i = 0; i < COLS; i++) {
+		if(min < arr[i])
+			min = arr[i]  ;
+	}
+
+	int counter = 0;
+	
+	int savedIndex = 0;
+	for (size_t i = 0; i < COLS ; i++) {
+		if (arr[i] != min) {
+			if (*maxCounter < counter) {
+			*maxCounter = counter;
+			savedIndex = i - *maxCounter;
+			counter = 0;
+			}
+		
+		}
+		else 
+			counter++;
+	}	
+	
+	return savedIndex;
+
+}

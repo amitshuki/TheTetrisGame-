@@ -8,7 +8,7 @@
 #include <windows.h>
 #include <time.h>
 #include "Block.h"
-#include "constans.h"
+
 
 const size_t ROWS = 18;
 const size_t COLS = 12;
@@ -16,6 +16,7 @@ const size_t COLS = 12;
 
 class Board
 {
+	enum DIR { LEFT = 0, RIGHT = 1, ROTATEL = 2, ROTATER = 3, DROP = 4, DOWN = 5 };
 	char boardGame[COLS][ROWS];
 
 	char floor = 94;

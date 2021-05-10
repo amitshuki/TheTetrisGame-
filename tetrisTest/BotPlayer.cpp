@@ -4,7 +4,7 @@ void BotPlayer::playerFlow()
 {
 	bool flag = true;
 	int maxCounter = 0; int  blockIndex;
-	size_t routateCounter;
+	size_t routateCounter=0;
 	//bool ifPossibleToDrop;
 	int* arr = hightisArray();
 	while (flag) {

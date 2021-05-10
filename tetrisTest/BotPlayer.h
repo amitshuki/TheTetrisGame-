@@ -1,10 +1,10 @@
 #pragma once
 #include "Player.h"
-#include "constans.h"
+
 #include <cstdlib>
 class BotPlayer :Player
 {
-	
+	enum DIR { LEFT = 0, RIGHT = 1, ROTATEL = 2, ROTATER = 3, DROP = 4, DOWN = 5 };
 	int* MovePath;
 
 	bool findPlace(int shapeType);

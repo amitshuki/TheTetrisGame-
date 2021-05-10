@@ -8,5 +8,12 @@ class BotPlayer :Player
 	size_t findShapeByRotate(int spaces);
 	int* hightisArray();
 	int findSpacesSequence(int* arr, int* maxCounter);
+	int findMaxBase();
+	int findBaseUp();
+	int findBaseDown();
+	int findBaseRight();
+	int findBaseLeft();
+	
+
 };
 

@@ -74,5 +74,8 @@
     <ClInclude Include="BotPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="constans.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

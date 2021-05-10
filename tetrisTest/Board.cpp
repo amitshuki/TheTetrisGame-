@@ -121,7 +121,7 @@ bool Board::isCollide(int x, int y)
 void Board::userInput(char key)
 {
 
-	if (key == Keys[0]) {
+	if (key == Keys[LEFT]) {
 		if (!isCollide(block.getX() - 1, block.getY()) && isInBoard(block.getX() - 1, block.getY()))
 		{
 			removeBlock(block.getX() - 1, block.getY());
@@ -129,14 +129,14 @@ void Board::userInput(char key)
 		}
 	}
 
-	else if (key == Keys[1]) {
+	else if (key == Keys[RIGHT]) {
 		if (!isCollide(block.getX() + 1, block.getY()) && isInBoard(block.getX() + 1, block.getY()))
 		{
 			removeBlock((block.getX() + 1), block.getY());
 
 		}
 	}
-	else if (key == Keys[4]) {
+	else if (key == Keys[DROP]) {
 		while (!isCollide(block.getX(), block.getY() + 1) && isInBoard(block.getX(), block.getY() + 1))
 		{
 
@@ -147,10 +147,10 @@ void Board::userInput(char key)
 		block.spwanBlock();
 
 	}
-	else if (key == Keys[3])
+	else if (key == Keys[ROTATEL])
 		block.rotateBolck(0);
 
-	else if (key == Keys[2])
+	else if (key == Keys[ROTATER])
 		block.rotateBolck(1);
 
 

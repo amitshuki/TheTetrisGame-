@@ -11,9 +11,6 @@ int Game::run() {
 
 			return 0;//chack for the ESC Key
 		}
-
-
-
 	}
 	if (isGameOver() != 0) return isGameOver();
 	return 1;

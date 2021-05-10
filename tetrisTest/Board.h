@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <time.h>
 #include "Block.h"
+#include "constans.h"
 
 const size_t ROWS = 18;
 const size_t COLS = 12;

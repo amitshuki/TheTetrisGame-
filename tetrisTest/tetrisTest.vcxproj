@@ -154,6 +154,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BotPlayer.h" />
+    <ClInclude Include="constans.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="gotoxy.h" />
     <ClInclude Include="Menu.h" />

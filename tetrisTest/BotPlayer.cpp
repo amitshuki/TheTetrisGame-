@@ -7,13 +7,12 @@ void BotPlayer::playerFlow()
 
 	for (size_t i = ROWS; i < 0; i--)
 	{
-		for (size_t j = 0; j < COLS; j++)
-		{
 			spaces = spaceCounter(i);
+
+			if(spaces>4)
 
 			findShapeByRotate(spaces);
 			//ifPossibleToDrop = board.isCollide(i, j);
-		}
 	}
 }
 

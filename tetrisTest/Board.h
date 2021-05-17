@@ -25,7 +25,7 @@ class Board
 	//block start cord
 	
 	bool isgameOver = false;
-	char Keys[5];
+	char Keys[5]={};
 	
 
 
@@ -46,7 +46,7 @@ public:
 	void BoardInit(Point _p, char* _keys);
 	void printboard(Point p);
 	void display();
-	void userInput(char key = 0);
+	void userInput(int dir = 5);
 	void setGameOver(bool a) { isgameOver = a; }
 	Point& getPoint() { return point; }
 	void setPoint(Point _p) {
@@ -56,7 +56,7 @@ public:
 	char getKey(size_t i) const { 
 		if (0 <= i && i < 5)
 			return Keys[i];
-		return '0';
+		return 6;
 	}
 	void setKeys(char* key);
 	void clearBlock();

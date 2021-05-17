@@ -13,18 +13,18 @@ int Game::run() {
 		}
 	}
 	if (isGameOver() != 0) return isGameOver();
-	return 1;
+	return 0;
 }
 
 int Game::resume() {
 
-	player_1.board.setPoint(Point(6, 5));
-	player_2.board.setPoint(Point(48, 5));
+	player_1->board.setPoint(Point(6, 5));
+	player_2->board.setPoint(Point(48, 5));
 
-	player_1.board.printboard(player_1.board.getPoint());
-	player_1.board.display();
-	player_2.board.printboard(player_2.board.getPoint());
-	player_2.board.display();
+	player_1->board.printboard(player_1->board.getPoint());
+	player_1->board.display();
+	player_2->board.printboard(player_2->board.getPoint());
+	player_2->board.display();
 	return run();
 }
 
@@ -35,9 +35,9 @@ int Game::resume() {
 
 int Game::isGameOver() {
 
-	if (player_1.board.getIsGameOVER())
+	if (player_1->board.getIsGameOVER())
 		return 2;
-	if (player_2.board.getIsGameOVER())
+	if (player_2->board.getIsGameOVER())
 		return 1;
 	return 0;
 }
@@ -52,12 +52,52 @@ void Game::userInput() {
 		if (_kbhit()) {
 			char key = toupper(_getch());
 			for (size_t j = 0; j < 5; j++) {
-				if (key == player_1.board.getKey(j)) keySelction[0] = key;
-				if (key == player_2.board.getKey(j)) keySelction[1] = key;
+				if (key == player_1->board.getKey(j)) keySelction[0] = key;
+				if (key == player_2->board.getKey(j)) keySelction[1] = key;
 			}
 		}
 	}
-	player_2.board.userInput(keySelction[1]);
-	player_1.board.userInput(keySelction[0]);
+	
+	player_2->board.userInput(keyToDir(keySelction[1]));
+	player_1->board.userInput(keyToDir(keySelction[0]));
+	
+	
 
+}
+int Game::keyToDir(char key) {
+//enum DIR { LEFT = 0, RIGHT = 1, ROTATEL = 2, ROTATER = 3, DROP = 4, DOWN = 5 };
+	for (int i= 0 ;i<= 5 ;i++)
+	if (key == player_2->board.getKey(i)|| key == player_1->board.getKey(i)) {
+		return i;
+	}
+	return DIR::DOWN;
+}
+
+int Game::HumenVsBotRun() {
+	int i = 0;
+	while (isGameOver() == 0) {
+		char key = DIR::DOWN;
+		Sleep(GAMESLEEP);
+		if(_kbhit())
+			 key = toupper(_getch());
+		
+		
+		BotPlayer* bp2 = static_cast<BotPlayer*>(player_2);
+		if (bp2->board.block.getX() == MID && bp2->board.block.getY() == UP) {
+			bp2->clearSteps();
+			bp2->playerFlow();
+		}
+		if (bp2->getNextMove(i) != -1) {
+			bp2->board.userInput(bp2->getNextMove(i));
+			i++;
+		}
+		player_1->board.userInput(keyToDir(key));
+
+		if (!clearKeyboardBuffer()) {
+
+			return 0;//chack for the ESC Key
+		}
+	}
+	if (isGameOver() != 0) return isGameOver();
+	return 1;
 }

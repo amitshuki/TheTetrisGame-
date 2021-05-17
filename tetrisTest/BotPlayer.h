@@ -2,14 +2,19 @@
 #include "Player.h"
 
 #include <cstdlib>
-class BotPlayer :Player
+class BotPlayer :public Player
 {
 	enum DIR { LEFT = 0, RIGHT = 1, ROTATEL = 2, ROTATER = 3, DROP = 4, DOWN = 5 };
-	int* MovePath;
+	
+	
+public:
+	int* MovePath = new int [COLS*ROWS];
 
-	bool findPlace(int shapeType);
+
 	void playerFlow();
-	int spaceCounter(int row);
+	int getNextMove(int i) {
+		return MovePath[i];
+	}
 	size_t findShapeByRotate(int spaces);
 	int* hightisArray();
 	int findSpacesSequence(int* arr, int* maxCounter);
@@ -20,6 +25,7 @@ class BotPlayer :Player
 	int findBaseLeft();
 	void updateArray(int* arr, int blockIndex, int maxCounter);
 	void botPath(int routateCounter, int _x, int _y);
+	void clearSteps();
 	
 
 };

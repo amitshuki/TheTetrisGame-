@@ -1,7 +1,7 @@
 #pragma once
 class Shape
 {
-    int type;
+    int type=0;
 public:
     enum Shapes { Line, LShape, Zshape, Sshape, plus, cube, Jshape ,BOMB};
 

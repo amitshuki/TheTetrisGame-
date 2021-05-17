@@ -12,15 +12,20 @@ void Menu::printMenu() {
 		gotoxy(x, y);
 		cout << "THE TETRIS GAME!";
 		gotoxy(x, y + 2);
-		cout << "Press -1- to Start" << endl;
+		cout << "Press -1- to Start a new game - Human vs Human" << endl;
 		gotoxy(x, y + 3);
-		cout << "Press -2- to Resume" << endl;
+		cout << "Press -2- to Start a new game - Human vs Computer" << endl;
 		gotoxy(x, y + 4);
-		cout << "Press -8- to Instrution" << endl;
+		cout << "Press -3- to Start a new game - Computer vs Computer" << endl;
 		gotoxy(x, y + 5);
+		cout << "Press -4- to Resume" << endl;
+		gotoxy(x, y + 6);
+		cout << "Press -8- to Instrution" << endl;
+		gotoxy(x, y + 7);
 		cout << "Press -9- to Exit" << endl;
 		key = _getch();
-		Game game;
+		Game game(key);
+		
 		char P1Keys[5] = { 'A','D','W','S','X' };
 		char P2Keys[5] = { 'J','L','I','K','M' };
 		system("cls");
@@ -29,17 +34,31 @@ void Menu::printMenu() {
 		
 		switch (key) {
 		case '1':
-			game.player_1.board.BoardInit(Point(6, 5), P1Keys);
-			game.player_2.board.BoardInit(Point(48, 5), P2Keys);
+		
+			game.player_1->board.BoardInit(Point(6, 5), P1Keys);
+			game.player_2->board.BoardInit(Point(48, 5), P2Keys);
 			p=game.run();
 			firstrun = true;
-			printGameOver(p);
+			printGameOver(p,game);
 			break;
+
 		case '2':
+		
+			game.player_1->board.BoardInit(Point(6, 5), P1Keys);
+			game.player_2->board.BoardInit(Point(48, 5), P2Keys);
+			p = game.HumenVsBotRun();
+			firstrun = true;
+			printGameOver(p,game);
+			break;
+
+
+		case '4':
+
 			if (firstrun == true && (p==0)) {
 				
 				p = game.resume();
-				printGameOver(p);
+				printGameOver(p,game);
+
 			}
 		
 			break;
@@ -54,11 +73,11 @@ void Menu::printMenu() {
 }
 
 
-void Menu::printGameOver(int p){
+void Menu::printGameOver(int p,Game& game){
 	if (p == 1 || p == 2) {
 		
-		game.player_1.board.setGameOver(false);
-		game.player_2.board.setGameOver(false);
+		game.player_1->board.setGameOver(false);
+		game.player_2->board.setGameOver(false);
 		system("cls");
 		gotoxy(0, 7);
 		cout << " #####     #    #     # ####### ####### #     # ####### ######\n";

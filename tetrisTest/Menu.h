@@ -10,13 +10,13 @@
 using namespace std;
 class Menu
 {
-	Game game;
+	
 	int x=20;
 	int y=10;
 
 public:
 	void printMenu();
-	void printGameOver(int P);
+	void printGameOver(int P,Game& game);
 	void printInstruction();
 
 };

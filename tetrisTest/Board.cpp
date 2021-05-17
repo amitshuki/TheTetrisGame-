@@ -38,7 +38,7 @@ void Board::BoardInit(Point _p, char* _keys) {
 	point.setX(_p.getX());
 	point.setY(_p.getY());
 	block.board = this;//for the forward declaration
-
+	
 	for (size_t i = 0; i < 5; i++) {
 		Keys[i] = _keys[i];
 	}
@@ -57,7 +57,7 @@ void Board::BoardInit(Point _p, char* _keys) {
 
 void Board::addShape() {
 	block.updateblock();
-
+	
 	if (isCollide(block.getX(), (block.getY() + 1))) {
 		isgameOver = true;
 		return;
@@ -118,10 +118,10 @@ bool Board::isCollide(int x, int y)
 	return false;
 }
 
-void Board::userInput(char key)
+void Board::userInput(int dir)
 {
-
-	if (key == Keys[LEFT]) {
+	
+	if (dir==LEFT) {
 		if (!isCollide(block.getX() - 1, block.getY()) && isInBoard(block.getX() - 1, block.getY()))
 		{
 			removeBlock(block.getX() - 1, block.getY());
@@ -129,14 +129,14 @@ void Board::userInput(char key)
 		}
 	}
 
-	else if (key == Keys[RIGHT]) {
+	else if (dir == RIGHT) {
 		if (!isCollide(block.getX() + 1, block.getY()) && isInBoard(block.getX() + 1, block.getY()))
 		{
 			removeBlock((block.getX() + 1), block.getY());
 
 		}
 	}
-	else if (key == Keys[DROP]) {
+	else if (dir == DROP) {
 		while (!isCollide(block.getX(), block.getY() + 1) && isInBoard(block.getX(), block.getY() + 1))
 		{
 
@@ -147,10 +147,10 @@ void Board::userInput(char key)
 		block.spwanBlock();
 
 	}
-	else if (key == Keys[ROTATEL])
+	else if (dir == ROTATEL)
 		block.rotateBolck(0);
 
-	else if (key == Keys[ROTATER])
+	else if (dir == ROTATER)
 		block.rotateBolck(1);
 
 

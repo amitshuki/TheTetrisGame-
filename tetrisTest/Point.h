@@ -10,7 +10,7 @@ public:
 		y = _y;
 	}
 	Point() {}
-	inline size_t getX() { return x; }
+		inline size_t getX() { return x; }
 	inline size_t getY() { return y; }
 	inline void setX(size_t x) { this->x=x; }
 	inline void setY(size_t y) { this->y = y; }

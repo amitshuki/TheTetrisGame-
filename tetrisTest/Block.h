@@ -12,7 +12,7 @@ class Block
 	int x = MID;
 	int y = UP;
 	Shape s;
-	int type;
+	int type=0;
 public:
 	Board* board;
 

@@ -20,7 +20,7 @@ class Game
 
 	enum { DOWN = 0 };
 	enum { ESC = 27 };
-	enum { GAMESLEEP = 700 };
+	enum { GAMESLEEP = 420 };
 public:
 	Game(char type) {
 		
@@ -45,7 +45,8 @@ public:
 	void userInput();
 	int resume();
 	int keyToDir(char key);
-	int HumenVsBotRun();
+	int HumenVsBotRun(int type);
+	int botVsBotRun(int typeL, int typeR);
 	friend class Menu;
 
 };

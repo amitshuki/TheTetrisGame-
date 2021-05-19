@@ -18,6 +18,7 @@ public:
 	void printMenu();
 	void printGameOver(int P,Game& game);
 	void printInstruction();
+	int choseTypeBot();
 
 };
 

@@ -11,7 +11,7 @@ public:
 	int* MovePath = new int [COLS*ROWS];
 
 
-	void playerFlow();
+	void playerFlow(int type);
 	int getNextMove(int i) {
 		return MovePath[i];
 	}
@@ -26,6 +26,9 @@ public:
 	void updateArray(int* arr, int blockIndex, int maxCounter);
 	void botPath(int routateCounter, int _x, int _y);
 	void clearSteps();
+	void findcord(int *shapeX, int *shapeY);
+	bool isWideEnough(int index);
+	bool gapbetween(int maxcounter, int index);
 	
 
 };

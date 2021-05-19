@@ -73,23 +73,26 @@ int Game::keyToDir(char key) {
 	return DIR::DOWN;
 }
 
-int Game::HumenVsBotRun() {
+int Game::HumenVsBotRun(int type) {
 	int i = 0;
-	while (isGameOver() == 0) {
+	BotPlayer* bp2 = static_cast<BotPlayer*>(player_2);
+ 	while (isGameOver() == 0) {
 		char key = DIR::DOWN;
 		Sleep(GAMESLEEP);
 		if(_kbhit())
 			 key = toupper(_getch());
-		
-		
-		BotPlayer* bp2 = static_cast<BotPlayer*>(player_2);
+	
 		if (bp2->board.block.getX() == MID && bp2->board.block.getY() == UP) {
-			bp2->clearSteps();
-			bp2->playerFlow();
+			i = 0;
+			bp2->playerFlow(type);
 		}
 		if (bp2->getNextMove(i) != -1) {
 			bp2->board.userInput(bp2->getNextMove(i));
 			i++;
+		}
+		else
+		{	
+			bp2->playerFlow(type);
 		}
 		player_1->board.userInput(keyToDir(key));
 
@@ -101,3 +104,51 @@ int Game::HumenVsBotRun() {
 	if (isGameOver() != 0) return isGameOver();
 	return 1;
 }
+
+int Game::botVsBotRun(int typeL,int typeR) {
+	int i = 0;
+	BotPlayer* bp2 = static_cast<BotPlayer*>(player_2);
+	BotPlayer* bp1 = static_cast<BotPlayer*>(player_1);
+	while (isGameOver() == 0) {
+		char key = DIR::DOWN;
+		Sleep(GAMESLEEP);
+
+		if (bp2->board.block.getX() == MID && bp2->board.block.getY() == UP) {
+			i = 0;
+			bp2->playerFlow(typeL);
+		}
+
+
+		if (bp2->getNextMove(i) != -1) {
+			bp2->board.userInput(bp2->getNextMove(i));
+			i++;
+		}
+		else
+		{
+			bp2->playerFlow(typeL);
+		}
+		
+
+
+		if (bp1->board.block.getX() == MID && bp1->board.block.getY() == UP) {
+			i = 0;
+			bp1->playerFlow(typeR);
+		}
+		if (bp1->getNextMove(i) != -1) {
+			bp1->board.userInput(bp1->getNextMove(i));
+			i++;
+		}
+		else
+		{
+			bp1->playerFlow(typeR);
+		}
+
+		if (!clearKeyboardBuffer()) {
+
+			return 0;//chack for the ESC Key
+		}
+	}
+	if (isGameOver() != 0) return isGameOver();
+	return 1;
+}
+

@@ -18,7 +18,7 @@ public:
 
 public:
 	bool rotateBolck(int n);
-	
+	void fixBlock();
 	const char getBlockChar (int  i, int j)  const { return block[i][j]; }
 	void spwanBlock();
 	void updateblock();

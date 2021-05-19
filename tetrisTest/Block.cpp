@@ -2,18 +2,20 @@
 #include "Board.h"
 
 void Block::updateblock() {
-	
-	int blockType = rand() %7;
+
+	int blockType = rand() % 7;
 	setX(MID);
 	setY(UP);
-	int t= rand() % 20;//5%
+	int t = rand() % 20;//5%
 	if (t == Shape::BOMB) {
 		s.setShape(Shape::BOMB);
+		type = Shape::BOMB;
 	}
-	else
-	s.setShape(blockType);
-	
-	type = blockType;
+	else {
+		s.setShape(blockType);
+
+		type = blockType;
+	}
 	for (size_t i = 0; i < BLOCKSIZE; i++)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
@@ -68,6 +70,7 @@ bool Block::rotateBolck(int n) {
 			}
 		}
 	}
+	fixBlock();
 
 	if ((*board).isCollide(x, y))
 	{ // And stop if it overlaps not be rotated
@@ -95,5 +98,38 @@ void Block::spwanBlock()
 		board->FixBoard();
 		board->checkLine();
 		board->addShape();
+	}
+}
+
+void Block::fixBlock() {
+	bool IsEmptyRow = true;
+	bool IsEmptyCol = true;
+	for (int i = 0; i < BLOCKSIZE; i++) {
+		if (block[0][i] == '&')
+			IsEmptyCol = false;
+
+	}
+	if (IsEmptyCol) {
+		for (int i = 0; i < BLOCKSIZE; i++) {
+			block[0][i] = block[1][i];
+			block[1][i] = block[2][i];
+			block[2][i] = block[3][i];
+			block[3][i] = ' ';
+		}
+	}
+
+	for (int i = 0; i < BLOCKSIZE; i++) {
+		if (block[i][0] == '&')
+			IsEmptyRow = false;
+
+	}
+
+	if (IsEmptyRow) {
+		for (int i = 0; i < BLOCKSIZE; i++) {
+			block[i][0] = block[i][1];
+			block[i][1] = block[i][2];
+			block[i][2] = block[i][3];
+			block[i][3] = ' ';
+		}
 	}
 }

@@ -5,6 +5,8 @@
 void Menu::printMenu() {
 	char key = -1;
 	int p=0;
+	int type1 = 0;
+	int type2 = 0;
 	bool firstrun = false;
 	while (key != 9) {
 		
@@ -43,12 +45,29 @@ void Menu::printMenu() {
 			break;
 
 		case '2':
-		
+			 type1 = choseTypeBot();
+			 system("cls");
 			game.player_1->board.BoardInit(Point(6, 5), P1Keys);
 			game.player_2->board.BoardInit(Point(48, 5), P2Keys);
-			p = game.HumenVsBotRun();
+			p = game.HumenVsBotRun(type1);
 			firstrun = true;
 			printGameOver(p,game);
+			break;
+		case '3':
+			type1 = choseTypeBot();
+			
+			system("cls");
+			gotoxy(15, 12);
+			cout << "And now for player left";
+			Sleep(Game::GAMESLEEP);
+			
+			type2= choseTypeBot();
+			system("cls");
+			game.player_1->board.BoardInit(Point(6, 5), P1Keys);
+			game.player_2->board.BoardInit(Point(48, 5), P2Keys);
+			p = game.botVsBotRun(type1,type2);
+			firstrun = true;
+			printGameOver(p, game);
 			break;
 
 
@@ -115,4 +134,11 @@ void Menu::printInstruction()
 	system("cls");
 	
 	
+}
+int Menu::choseTypeBot(){
+	system("cls");
+	gotoxy(15, 12);
+	cout << "  (1)NOVICE (2) GOOD   (3)BEST  "<<endl;
+	int key = _getch();
+	return key;
 }

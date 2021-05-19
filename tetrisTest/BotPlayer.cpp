@@ -1,10 +1,10 @@
 #include "BotPlayer.h"
 
-void BotPlayer::playerFlow()
+void BotPlayer::playerFlow(int type)
 {
 	bool flag = true;
 	int maxCounter = 0; int  blockIndex;
-	size_t routateCounter=0;
+	size_t routateCounter = 0;
 
 	int* arr = hightisArray();
 
@@ -24,11 +24,33 @@ void BotPlayer::playerFlow()
 					break;
 				}
 			}
-			updateArray(arr, blockIndex, maxCounter);//delete the max for go the next one in this hight
+			if (routateCounter == BLOCKSIZE || !isWideEnough(blockIndex)) {
+				updateArray(arr, blockIndex, maxCounter);//delete the max for go the next one in this hight
+				flag = true;
+			}
+		}
+
+	}
+	botPath(routateCounter, blockIndex, arr[blockIndex]);
+	if (type == 1) {
+		int i = 0;
+		while (MovePath[i] != -1) {
+			if (i % 10 == 0) {
+				MovePath[i] = rand() % 6;
+			}
+			i++;
 		}
 		
 	}
-	botPath(routateCounter, blockIndex, arr[blockIndex]);
+	if (type == 2) {
+		int i = 0;
+		while (MovePath[i] != -1) {
+			if (i % 40 == 0) {
+				MovePath[i] = rand() % 6;
+			}
+			i++;
+		}
+	}
 	delete arr;
 
 }
@@ -39,22 +61,23 @@ int BotPlayer::findMaxBase()
 	int baseCounterDown = findBaseDown();
 	int baseCounterRight = findBaseRight();
 	int baseCounterLeft = findBaseLeft();
-	int MaxBase = baseCounterUp;
+	int MaxBase = baseCounterDown;
 	int rotate = 0;
 
-	if (baseCounterDown > MaxBase)
-	{
-		MaxBase = baseCounterDown;
-		rotate = 1;
-	}
+
 	if (baseCounterRight > MaxBase)
 	{
 		MaxBase = baseCounterRight;
-		rotate = 2;
+		rotate = 1;
 	}
 	if (baseCounterLeft > MaxBase)
 	{
 		MaxBase = baseCounterLeft;
+		rotate = 2;
+	}
+	if (baseCounterUp > MaxBase)
+	{
+		MaxBase = baseCounterUp;
 		rotate = 3;
 	}
 	return rotate;
@@ -67,7 +90,7 @@ int BotPlayer::findBaseUp()
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (board.block.getBlockChar(i, j) == '&')
+			if (board.block.getBlockChar(j, i) == '&')
 				baseCounterUp++;
 		}
 		if (baseCounterUp != 0)
@@ -79,7 +102,7 @@ int BotPlayer::findBaseUp()
 int BotPlayer::findBaseDown()
 {
 	int baseCounterDown = 0;
-	for (size_t i = BLOCKSIZE - 1; i <= 0; i--)
+	for (int i = BLOCKSIZE - 1; i >= 0; i--)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
@@ -95,11 +118,11 @@ int BotPlayer::findBaseDown()
 int BotPlayer::findBaseRight()
 {
 	int baseCounterRight = 0;
-	for (size_t i = BLOCKSIZE - 1; i <= 0; i--)
+	for (size_t i = BLOCKSIZE - 1; i >= 0; i--)
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (board.block.getBlockChar(j, i) == '&')
+			if (board.block.getBlockChar(i, j) == '&')
 				baseCounterRight++;
 		}
 		if (baseCounterRight != 0)
@@ -115,7 +138,7 @@ int BotPlayer::findBaseLeft()
 	{
 		for (size_t j = 0; j < BLOCKSIZE; j++)
 		{
-			if (board.block.getBlockChar(j, i) == '&')
+			if (board.block.getBlockChar(i, j) == '&')
 				baseCounterLeft++;
 		}
 		if (baseCounterLeft != 0)
@@ -130,13 +153,13 @@ int BotPlayer::findBaseLeft()
 size_t BotPlayer::findShapeByRotate(int spaces)
 {
 	int base = BLOCKSIZE;
-	if (spaces == findBaseUp())
-		return 0;
 	if (spaces == findBaseDown())
+		return 0;
+	if (spaces == findBaseLeft())
 		return 1;
 	if (spaces == findBaseRight())
 		return 2;
-	if (spaces == findBaseLeft())
+	if (spaces == findBaseUp())
 		return 3;
 
 	return base;
@@ -147,13 +170,16 @@ int* BotPlayer::hightisArray() {
 	int* arr = new int[COLS];
 
 	for (size_t i = 0; i < COLS; i++) {
-		for (size_t j = 0; j < ROWS; j++)
-			if (board.getBlockChar(i, j) == '#' || j == ROWS - 1) {
-				arr[i] = j;
+		for (size_t j = 0; j < ROWS; j++) {
+			if (board.getChar(i, j) == '#') {
+				arr[i] = j - 1;
 				break;
 			}
+			else if (j == ROWS - 1)
+				arr[i] = j;
 
 
+		}
 	}
 	return arr;
 
@@ -186,7 +212,8 @@ int BotPlayer::findSpacesSequence(int* arr, int* maxCounter) {
 		else
 			counter++;
 	}
-	if (firstrun) {
+	if (firstrun || counter > * maxCounter) {
+		savedIndex = (COLS - 1) - *maxCounter;
 		*maxCounter = counter;
 	}
 	return savedIndex;
@@ -201,22 +228,13 @@ void BotPlayer::updateArray(int* arr, int blockIndex, int maxCounter) {
 
 void BotPlayer::botPath(int routateCounter, int _x, int _y) {
 	int index = 0;
-	int left = board.block.getX() - _x;
-	int down = board.block.getY() - _y;
-	MovePath = new int[abs(down)+abs(left)];
+	int shapeX, shapeY;
+	findcord(&shapeX, &shapeY);
+	int left = board.block.getX() + shapeX - _x;
+	int down = board.block.getY() + shapeY - _y;
+	delete MovePath;
+	MovePath = new int[abs(down) + abs(left) + routateCounter];
 	while (left != 0 && down != 0) {
-		if (left < 0) {
-			MovePath[index] = LEFT;
-			left++;
-			index++;
-			down++;
-		}
-		if (left > 0) {
-			MovePath[index] = RIGHT;
-			left--;
-			index++;
-			down++;
-		}
 		if (routateCounter == 1 || routateCounter == 3) {
 			MovePath[index] = ROTATER;
 			index++;
@@ -235,6 +253,20 @@ void BotPlayer::botPath(int routateCounter, int _x, int _y) {
 			down++;
 			routateCounter = 0;
 		}
+		if (left > 0) {
+			MovePath[index] = LEFT;
+			left--;
+			index++;
+			down++;
+		}
+		if (left < 0) {
+			MovePath[index] = RIGHT;
+			left++;
+			index++;
+			down++;
+		}
+
+
 		if (left == 0 && routateCounter == 0) {
 			while (down != 0) {
 				MovePath[index] = DOWN;
@@ -243,18 +275,87 @@ void BotPlayer::botPath(int routateCounter, int _x, int _y) {
 			}
 		}
 
-		MovePath[index] = -1;//flag for end of array 
+
 
 	}
-		
+	MovePath[index] = -1;//flag for end of array 
 
 }
+void BotPlayer::findcord(int* shapeX, int* shapeY) {
+	for (int i = 0; i < BLOCKSIZE; i++) {
+		for (int j = 0; j < BLOCKSIZE; j++) {
+			if (board.getBlockChar(i, j) == '&') {
+				*shapeX = i;
+				*shapeY = j;
+				return;
+			}
+		}
+	}
 
-void BotPlayer::clearSteps() {
-	for (size_t i = 0; i < COLS + ROWS-1; i++)
-		MovePath[i] =DOWN;
+}
+bool BotPlayer::isWideEnough(int index) {
+	
+	int counter = 0;
+	int maxCounter = 0;
+	for (size_t i = 0; i < BLOCKSIZE; i++)
+	{
+		counter = 0;
+		for (size_t j = 0; j < BLOCKSIZE; j++)
+		{
+			if (board.getBlockChar(j, i) == '&')
+				counter++;
 
-		MovePath[COLS + ROWS - 1] =-1;
 		
+		}
+		if(counter>maxCounter)maxCounter=counter;
+	}
+	return (gapbetween(maxCounter, index));
+	
+}
+bool BotPlayer::gapbetween(int maxCounter, int index) {
+	int indexHigh = -1;
+	int leftHigh = -1;
+	int rightHigh = -1;
+	for (int i = 0; i < ROWS; i++) {
+		if (board.getChar(index, i) == '#') {
+			indexHigh = i;
+			break;
+			
+		}
+		if (i == ROWS - 1)indexHigh = i;
+	}
+	if (index != 0) {
+		for (int i = 0; i < ROWS; i++) {
+			if (board.getChar(index - 1, i) == '#') {
+				leftHigh = i;
+				break;
+			}
+			if (i == ROWS - 1)leftHigh = i;
+		}
+	}
+	if (index != COLS-1) {
+		for (int i = 0; i < ROWS; i++) {
+			if (board.getChar(index + 1, i) == '#') {
+				rightHigh = i;
+				break;
+			}
+			if (i == ROWS - 1)rightHigh = i;
+		}
+	}
 
+	if (index==0) {
+		if (indexHigh-rightHigh <= maxCounter) {
+			return true;
+		}
+		else return false;
+	}
+	if (index == COLS - 1) {
+		if (indexHigh-leftHigh <= maxCounter) {
+			return true;
+		}
+		else return false;
+	}
+	if (indexHigh- leftHigh <= maxCounter && indexHigh-rightHigh  <= maxCounter)
+		return true;
+		else return false;
 }
